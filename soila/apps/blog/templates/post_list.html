@@ -1,0 +1,36 @@
+{% extends 'pages.html' %}{% load static %}{% load thumbnail %}
+{% block title %}Блог - ООО "Соила"{% endblock title %}
+    {% block content_page %}
+        <br>
+        <h1>Блог:</h1>
+
+        {% for post in posts %}
+            <div class="post_cat">
+                <p><img src="{{post.image.url}}" class="img-fluid" alt="Responsive image"/></p>
+                 <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                    <p>{{ post.text|truncatewords:35}}</p>
+            </div>
+            <hr>
+        {% endfor %}
+
+
+    {% endblock content_page %}
+
+    <div class="sidebar">
+    {% block sidebar %}
+        <div class="sidebar_block">
+            <h5>Последние записи:</h5>
+            <ul>
+                {% for post in recent_posts %}
+                    <li><a href="">{{ post.title }}</a></li>
+                {% endfor %}
+            </ul>
+            <h5>Категории:</h5>
+            <ul>
+                {% for cat in categories %}
+                    <li><a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endblock sidebar %}
+    </div>

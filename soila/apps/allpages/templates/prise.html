@@ -1,0 +1,41 @@
+{% extends 'pages_full_width.html' %}{% load static %}
+{% block title %}Техника - ООО "Соила"{% endblock %}
+{% block content_page %}
+
+    <h1>Прейскурант</h1>
+    <div class="post_cat">
+        <div class="row container">
+        <div class="table-responsive">
+        <table class="table table-responsive table-bordered">
+        <thead>
+                <tr>
+                  <th>Наименование</th>
+                  <th>Описание</th>
+                  <th>Цена, руб</th>
+                  <th>Единицы</th>
+                </tr>
+              </thead>
+        {% for prise in all_prise %}
+
+              <tbody>
+                <tr>
+                  <td>{{ prise.name }}</td>
+                  <td>{{ prise.text }}</td>
+                  <td>{{ prise.prise_item }}</td>
+                  <td>{{ prise.size }}</td>
+                </tr>
+              </tbody>
+            {% endfor %}
+        </table>
+
+        </div>
+
+         </div>
+
+        <hr>
+
+
+    </div>
+
+{% endblock content_page %}
+

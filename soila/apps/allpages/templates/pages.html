@@ -1,0 +1,16 @@
+{% extends 'base.html' %}{% load static %}
+
+{% block page %}
+
+    <div class="container-fluid row">
+
+    <div class="offset-md-1 col-md-7 content">
+    {% block content_page %}{% endblock content_page %}
+    </div>
+    <div class="col-md-3 sidebar">
+    {% block sidebar %}{% endblock sidebar %}
+    </div>
+    </div>
+
+
+{% endblock page %}

@@ -1,0 +1,37 @@
+{% extends 'pages.html' %}{% load static %}
+{% block title %}{{ post.title }} - ООО "Соила"{% endblock %}
+    {% block content_page %}
+        <div class="post-title">
+            <h1>{{ post.title }}</h1>
+        </div>
+        <hr>
+            <div class="row justify-content-center">
+             {% if post.image %}
+                <p><img src="{{post.image.url}}" width="800"></p>
+             {% else %}
+                 <p></p>
+             {% endif %}
+
+            </div>
+            <p>{{ post.text|safe }}</p>
+
+
+    {% endblock content_page %}
+    <div class="sidebar">
+    {% block sidebar %}
+        <div class="sidebar_block">
+            <h5>Последние записи:</h5>
+            <ul>
+                {% for post in recent_posts %}
+                    <li><a href="{{ cat.get_absolute_url }}">{{ post.title }}</a></li>
+                {% endfor %}
+            </ul>
+            <h5>Категории:</h5>
+            <ul>
+                {% for cat in categories %}
+                    <li><a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endblock sidebar %}
+    </div>

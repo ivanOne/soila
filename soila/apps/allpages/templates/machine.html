@@ -1,0 +1,25 @@
+{% extends 'pages_full_width.html' %}{% load static %}
+{% block title %}Техника - ООО "Соила"{% endblock %}
+{% block content_page %}
+
+    <h1>Техника</h1>
+    <div class="post_cat">
+        <div class="row container">
+        {% for machine in machines %}
+            <div class="col-md-4">
+                <p><img src="{{machine.image.url}}" class="img-fluid" alt="Responsive image" width="524"/></p>
+            </div>
+            <div class="row col-md-8 justify-content-center">
+                <p>{{ machine.name }}</p>
+            </div>
+
+
+        {% endfor %}
+
+         </div>
+    <hr>
+
+    </div>
+
+{% endblock content_page %}
+

@@ -1,0 +1,45 @@
+{% extends 'pages.html' %}{% load static %}
+
+{% block title %}Сотрудники - ООО "Соила"{% endblock %}
+
+{% block content_page %}
+
+    <h1>Сотрудники</h1>
+    <div class="post_cat">
+        <div class="row container">
+        {% for worker in workers %}
+            <div class="col-md-4">
+                <p>
+
+
+                        <a href="{{worker.image.url}}" data-lightbox="image-{{ worker.id }}" data-title="{{ worker.name }}">
+	                        <img src="{{worker.image.url}}" class="img-fluid" alt="" width="256"/>
+                        </a>
+
+
+                </p>
+
+
+                <p>{{ worker.name }}<br><small>{{ worker.department }}</small></p>
+            </div>
+
+
+        {% endfor %}
+
+         </div>
+    <hr>
+
+    </div>
+
+{% endblock content_page %}
+
+{% block sidebar %}
+    <ul>
+        <li>Lorem.</li>
+        <li>Nobis!</li>
+        <li>Ipsam?</li>
+        <li>Voluptas.</li>
+        <li>Architecto.</li>
+    </ul>
+{% endblock sidebar %}
+</div>
