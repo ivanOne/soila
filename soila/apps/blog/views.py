@@ -21,21 +21,10 @@ def post_list_by_category(request, slug_category):
 
 
 def post_list(request):
-    post = Post.objects.all().order_by('-published_date')
+    posts = Post.objects.all().order_by('-published_date')
     categories = Category.objects.all()
-    paginator = Paginator(post,2)
-    page =request.Get.get('page')
-    try:
-        posts =paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
     args={}
     args['posts']=posts
-    args['post']=post
-    args['page']=page
     args['categories'] = categories
     args['recent_posts']=posts[0:3]
 
