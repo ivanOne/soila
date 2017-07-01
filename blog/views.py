@@ -1,4 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404
+from django.views.generic import ListView, DetailView
+
 from .models import Post, Category
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -32,6 +34,29 @@ def post_list_by_category(request, slug_category):
     return render_to_response('post_list_by_category.html', args)
 
 
+#Опишу эту же view но уже более круто :-)
+class CategoryPostList(ListView):
+    template_name = 'post_list_by_category.html'
+    paginate_by = 1
+    category = None
+    categories = Category.objects.all()
+    recent_posts = None
+
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, slug=self.kwargs.get('slug_category'))
+        posts = Post.objects.filter(category=self.category).order_by('-published_date')
+        self.recent_posts = posts[0:3]
+        return posts
+
+    def get_context_data(self, **kwargs):
+        #Вызываем сначала родительский метод что бы собрать весь контекст, и затем дополняем его
+        ctx = super().get_context_data(**kwargs)
+        ctx['recent_posts'] = self.recent_posts
+        ctx['categories'] = self.categories
+        ctx['category'] = self.category
+        return ctx
+
+
 def post_list(request):
     posts = Post.objects.all().order_by('-published_date')
     categories = Category.objects.all()
@@ -43,6 +68,23 @@ def post_list(request):
     return render_to_response('post_list.html', args)
 
 
+#post_list но опять же в ООП стиле
+class PostList(ListView):
+    template_name = 'post_list.html'
+    paginate_by = 2
+    categories = Category.objects.all()
+    recent_posts = None
+
+    def get_queryset(self):
+        posts = Post.objects.all().order_by('-published_date')
+        self.recent_posts = posts[0:3]
+        return posts
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['recent_posts'] = self.recent_posts
+        ctx['categories'] = self.categories
+        return ctx
 
 
 
@@ -53,3 +95,17 @@ def post_detail(request, slug):
     recent_posts = reversed(all_posts[0:1])
 
     return render_to_response('post_detail.html', {'post':post,'categories':categories, 'recent_posts':recent_posts})
+
+
+#post_detail но опять же в ООП стиле
+class PostDetail(DetailView):
+    template_name = 'post_detail.html'
+    categories = Category.objects.all()
+    recent_posts = None
+    queryset = Post.objects.all()
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['categories'] = self.categories
+        ctx['recent_posts'] = reversed(Post.objects.all()[0:1])
+        return ctx
