@@ -38,6 +38,7 @@ def post_list_by_category(request, slug_category):
 class CategoryPostList(ListView):
     template_name = 'post_list_by_category.html'
     paginate_by = 1
+    context_object_name = 'posts'
     category = None
     categories = Category.objects.all()
     recent_posts = None
