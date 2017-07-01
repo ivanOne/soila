@@ -18,24 +18,14 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from .apps.allpages import views
-
-
-
-
-
 
 urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
-    url(r'^blog/', include('soila.apps.blog.urls')),
-    url(r'^o-kompanii/$', views.company, name='company'),
-    url(r'^sotrudniki/$', views.worker_list, name='worker_list'),
-    url(r'^tehnika/$', views.machine_list, name='machine_list'),
-    url(r'^prise/$', views.prise_list, name='prise_list'),
+    url(r'^blog/', include('blog.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    url(r'^$', include('soila.apps.allpages.urls')),
-    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^', include('allpages.urls')),
+ ]
 
 
 if settings.DEBUG:
